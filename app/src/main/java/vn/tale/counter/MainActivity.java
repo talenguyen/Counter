@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     ButterKnife.bind(this);
 
     setupRadioGroupController();
+    radioGroupController.setSelection(0);
   }
 
   private void setupRadioGroupController() {
