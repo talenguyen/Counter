@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <TextView
+    android:id="@+id/btNum1"
+    style="@style/ButtonKeyboard"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:text="@string/num_1"
+    app:layout_heightPercent="25%"
+    app:layout_widthPercent="33%"/>
+
+  <TextView
+    android:id="@+id/btNum2"
+    style="@style/ButtonKeyboard"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_gravity="center_horizontal"
+    android:text="@string/num_2"
+    app:layout_heightPercent="25%"
+    app:layout_widthPercent="34%"/>
+
+  <TextView
+    android:id="@+id/btNum3"
+    style="@style/ButtonKeyboard"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_gravity="end"
+    android:text="@string/num_3"
+    app:layout_heightPercent="25%"
+    app:layout_widthPercent="33%"/>
+
+  <TextView
+    android:id="@+id/btNum4"
+    style="@style/ButtonKeyboard"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:text="@string/num_4"
+    app:layout_heightPercent="25%"
+    app:layout_marginTopPercent="25%"
+    app:layout_widthPercent="33%"/>
+
+  <TextView
+    android:id="@+id/btNum5"
+    style="@style/ButtonKeyboard"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_gravity="center_horizontal"
+    android:text="@string/num_5"
+    app:layout_heightPercent="25%"
+    app:layout_marginTopPercent="25%"
+    app:layout_widthPercent="34%"/>
+
+  <TextView
+    android:id="@+id/btNum6"
+    style="@style/ButtonKeyboard"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_gravity="end"
+    android:text="@string/num_6"
+    app:layout_heightPercent="25%"
+    app:layout_marginTopPercent="25%"
+    app:layout_widthPercent="33%"/>
+
+  <TextView
+    android:id="@+id/btNum7"
+    style="@style/ButtonKeyboard"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:text="@string/num_7"
+    app:layout_heightPercent="25%"
+    app:layout_marginTopPercent="50%"
+    app:layout_widthPercent="33%"/>
+
+  <TextView
+    android:id="@+id/btNum8"
+    style="@style/ButtonKeyboard"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_gravity="center_horizontal"
+    android:text="@string/num_8"
+    app:layout_heightPercent="25%"
+    app:layout_marginTopPercent="50%"
+    app:layout_widthPercent="34%"/>
+
+  <TextView
+    android:id="@+id/btDel"
+    style="@style/ButtonKeyboard"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_gravity="bottom"
+    android:text="@string/num_Del"
+    app:layout_heightPercent="25%"
+    app:layout_widthPercent="33%"/>
+
+  <TextView
+    android:id="@+id/btNum0"
+    style="@style/ButtonKeyboard"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_gravity="center_horizontal|bottom"
+    android:text="@string/num_0"
+    app:layout_heightPercent="25%"
+    app:layout_marginTopPercent="50%"
+    app:layout_widthPercent="34%"/>
+
+  <TextView
+    android:id="@+id/btNum9"
+    style="@style/ButtonKeyboard"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_gravity="end"
+    android:text="@string/num_9"
+    app:layout_heightPercent="25%"
+    app:layout_marginTopPercent="50%"
+    app:layout_widthPercent="33%"/>
+
+</merge>
