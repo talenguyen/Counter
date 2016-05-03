@@ -11,4 +11,6 @@
   <string name="num_8">8</string>
   <string name="num_9">9</string>
   <string name="num_Del">Del</string>
+  <string name="colon">:</string>
+  <string name="double_zero">00</string>
 </resources>

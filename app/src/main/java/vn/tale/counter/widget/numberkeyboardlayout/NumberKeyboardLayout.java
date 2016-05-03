@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.percent.PercentFrameLayout;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -137,12 +136,11 @@ public class NumberKeyboardLayout extends PercentFrameLayout implements View.OnC
     if (textView.equals(target)) {
       return;
     }
+    target = textView;
     final String value = textView.getText().toString();
-    if (TextUtils.isDigitsOnly(value)) {
+    if (!value.isEmpty()) {
       textBuilder.setValue(value);
     }
-    target = textView;
-    target.setText(textBuilder.getText());
   }
 
   private void onKeyPressed(Key key) {
