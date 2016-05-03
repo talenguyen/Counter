@@ -14,7 +14,7 @@ android {
   }
   signingConfigs {
     release {
-      storeFile file('/Users/giang.nguyen/Development/tiki/Tale/Counter/app/debug.keystore')
+      storeFile file('./debug.keystore')
       keyAlias 'androiddebugkey'
       keyPassword 'android'
       storePassword 'android'

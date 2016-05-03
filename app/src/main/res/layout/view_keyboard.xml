@@ -88,6 +88,17 @@
     app:layout_widthPercent="34%"/>
 
   <TextView
+    android:id="@+id/btNum9"
+    style="@style/ButtonKeyboard"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_gravity="end"
+    android:text="@string/num_9"
+    app:layout_heightPercent="25%"
+    app:layout_marginTopPercent="50%"
+    app:layout_widthPercent="33%"/>
+
+  <TextView
     android:id="@+id/btDel"
     style="@style/ButtonKeyboard"
     android:layout_width="0dp"
@@ -109,14 +120,12 @@
     app:layout_widthPercent="34%"/>
 
   <TextView
-    android:id="@+id/btNum9"
+    android:id="@+id/btCta"
     style="@style/ButtonKeyboard"
     android:layout_width="0dp"
     android:layout_height="0dp"
-    android:layout_gravity="end"
-    android:text="@string/num_9"
+    android:layout_gravity="bottom|end"
     app:layout_heightPercent="25%"
-    app:layout_marginTopPercent="50%"
     app:layout_widthPercent="33%"/>
 
 </merge>

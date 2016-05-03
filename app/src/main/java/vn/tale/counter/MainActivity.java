@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,6 +16,8 @@ import vn.tale.counter.ui.component.radio.RadioItem;
 import vn.tale.counter.widget.numberkeyboardlayout.NumberKeyboardLayout;
 
 public class MainActivity extends AppCompatActivity {
+
+  private static final String TAG = "MainActivity";
 
   private RadioGroupController radioGroupController;
 
@@ -57,7 +60,11 @@ public class MainActivity extends AppCompatActivity {
     ButterKnife.bind(this);
 
     setupRadioGroupController();
-    radioGroupController.setSelection(0);
+    onTapSecondView();
+  }
+
+  private void addTime(String minutes, String seconds) {
+    Log.d(TAG, "addTime() called with: " + "minutes = [" + minutes + "], seconds = [" + seconds + "]");
   }
 
   private void setupRadioGroupController() {
@@ -72,20 +79,24 @@ public class MainActivity extends AppCompatActivity {
     });
   }
 
-  @OnClick({R.id.tvMinutes, R.id.tvSeconds}) public void onTextViewPressed(View view) {
-    final int id = view.getId();
-    int position;
-    switch (id) {
-      case R.id.tvSeconds:
-        position = 1;
-        break;
-      default:
-        position = 0;
-    }
-    radioGroupController.setSelection(position);
+  @OnClick(R.id.tvMinutes) public void onTapMinuteView() {
+    radioGroupController.setSelection(0);
+    vNumberKeyboardLayout.setupCta(getString(R.string.next), new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        onTapSecondView();
+      }
+    });
   }
 
-  @Override protected void onResume() {
-    super.onResume();
+  @OnClick(R.id.tvSeconds) public void onTapSecondView() {
+    radioGroupController.setSelection(1);
+    vNumberKeyboardLayout.setupCta(getString(R.string.ok), new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        final String minutes = tvMinutes.getText().toString();
+        final String seconds = tvSeconds.getText().toString();
+        addTime(minutes, seconds);
+      }
+    });
   }
+
 }

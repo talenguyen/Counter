@@ -43,6 +43,8 @@ public class NumberKeyboardLayout extends PercentFrameLayout implements View.OnC
 
   private TextBuilder textBuilder;
   private TextView target;
+  private TextView btCta;
+  private OnClickListener onCtaButtonClickListener;
 
   public NumberKeyboardLayout(Context context) {
     this(context, null, 0);
@@ -85,6 +87,13 @@ public class NumberKeyboardLayout extends PercentFrameLayout implements View.OnC
     findViewById(R.id.btNum8).setOnClickListener(this);
     findViewById(R.id.btNum9).setOnClickListener(this);
     findViewById(R.id.btDel).setOnClickListener(this);
+    btCta = ((TextView) findViewById(R.id.btCta));
+    btCta.setOnClickListener(this);
+  }
+
+  public void setupCta(CharSequence text, OnClickListener onClickListener) {
+    btCta.setText(text);
+    onCtaButtonClickListener = onClickListener;
   }
 
   @Override public void onClick(View v) {
@@ -124,6 +133,10 @@ public class NumberKeyboardLayout extends PercentFrameLayout implements View.OnC
       case R.id.btDel:
         key = KEY_DEL;
         break;
+      case R.id.btCta:
+        if (onCtaButtonClickListener != null) {
+          onCtaButtonClickListener.onClick(v);
+        }
       default:
         key = null;
     }
