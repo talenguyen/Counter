@@ -1,5 +1,7 @@
 package vn.tale.counter.widget.numberkeyboardlayout;
 
+import android.support.annotation.VisibleForTesting;
+
 /**
  * <p>
  * Build a TextBuilder for build text base on key pressed.
@@ -41,5 +43,19 @@ public final class TextBuilder {
 
   public String getText() {
     return textBuilder.toString();
+  }
+
+  public void setValue(String value) {
+    if (value == null || value.isEmpty() || !isNumber(value)) {
+      textBuilder.setLength(0);
+      textBuilder.append(defaultValue);
+    } else {
+      textBuilder.setLength(0);
+      textBuilder.append(value);
+    }
+  }
+
+  @VisibleForTesting boolean isNumber(String text) {
+    return text.matches("[0-9]+");
   }
 }

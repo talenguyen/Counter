@@ -1,8 +1,10 @@
 package vn.tale.counter.widget.numberkeyboardlayout;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.percent.PercentFrameLayout;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
@@ -55,7 +57,17 @@ public class NumberKeyboardLayout extends PercentFrameLayout implements View.OnC
     super(context, attrs, defStyleAttr);
     inflate(context, R.layout.view_keyboard, this);
     setupOnClick();
-    textBuilder = new TextBuilder(2);
+    TypedArray typedArray = null;
+    final int size;
+    try {
+      typedArray = context.obtainStyledAttributes(attrs, R.styleable.NumberKeyboardLayout, defStyleAttr, 0);
+      size = typedArray.getInt(R.styleable.NumberKeyboardLayout_size, 2);
+      setSize(size);
+    } finally {
+      if (typedArray != null) {
+        typedArray.recycle();
+      }
+    }
   }
 
   public void setSize(int size) {
@@ -122,7 +134,15 @@ public class NumberKeyboardLayout extends PercentFrameLayout implements View.OnC
   }
 
   public void setTarget(TextView textView) {
+    if (textView.equals(target)) {
+      return;
+    }
+    final String value = textView.getText().toString();
+    if (TextUtils.isDigitsOnly(value)) {
+      textBuilder.setValue(value);
+    }
     target = textView;
+    target.setText(textBuilder.getText());
   }
 
   private void onKeyPressed(Key key) {

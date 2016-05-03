@@ -1,12 +1,11 @@
-package vn.tale.counter.widget;
+package vn.tale.counter.widget.numberkeyboardlayout;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import vn.tale.counter.widget.numberkeyboardlayout.NumberKeyboardLayout;
-import vn.tale.counter.widget.numberkeyboardlayout.TextBuilder;
-
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by Giang Nguyen at Tiki on 4/29/16.
@@ -47,4 +46,29 @@ public class TextBuilderTest {
     assertEquals("00", textBuilder.getText());
   }
 
+  @Test
+  public void testSetValue() throws Exception {
+    textBuilder.setValue("123");
+    assertEquals("123", textBuilder.getText());
+  }
+
+  @Test
+  public void testSetValue_shouldBeZeroIfEmpty() throws Exception {
+    textBuilder.setValue("");
+    assertEquals("00", textBuilder.getText());
+  }
+
+  @Test
+  public void testSetValue_shouldBeZeroIfNotDigits() throws Exception {
+    textBuilder.setValue("abc");
+    assertEquals("00", textBuilder.getText());
+  }
+
+  @Test
+  public void testIsNumber() throws Exception {
+    assertTrue(textBuilder.isNumber("1234567890"));
+    assertFalse(textBuilder.isNumber("ab12345"));
+    assertFalse(textBuilder.isNumber("12345ab"));
+    assertFalse(textBuilder.isNumber("123z45"));
+  }
 }
