@@ -1,4 +1,4 @@
-package vn.tale.counter;
+package vn.tale.counter.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import vn.tale.counter.R;
 import vn.tale.counter.ui.component.radio.RadioGroupController;
 import vn.tale.counter.ui.component.radio.RadioItem;
 import vn.tale.counter.widget.numberkeyboardlayout.NumberKeyboardLayout;
