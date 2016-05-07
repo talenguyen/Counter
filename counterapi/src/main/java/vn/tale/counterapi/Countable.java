@@ -9,5 +9,5 @@ public interface Countable {
    * Value to be counted. Should be formatted in second.
    * @return value to count
    */
-  long value();
+  int value();
 }
