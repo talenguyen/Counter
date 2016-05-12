@@ -28,10 +28,9 @@ public class Counter {
         .map(new Func1<Long, Integer>() {
           @Override public Integer call(Long value) {
             if (type == TYPE_COUNT_DOWN) {
-              final int count = (int) (value / interval);
-              return maxValue - count;
+              return maxValue - value.intValue();
             } else {
-              return (int) (value / interval) + 1;
+              return value.intValue() + 1;
             }
           }
         })
