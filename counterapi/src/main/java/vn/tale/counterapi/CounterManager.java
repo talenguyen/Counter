@@ -18,13 +18,21 @@ public class CounterManager {
   private int repeatCount;
   private int stepCount;
   private Subscription counterSubscription;
+  private ThreadScheduler threadScheduler;
 
-  public CounterManager(@NonNull List<? extends Countable> countableList, int interval, int repeatCount) {
+  public CounterManager(@NonNull List<? extends Countable> countableList, int interval, int repeatCount, ThreadScheduler threadScheduler) {
     this.countableList = countableList;
     this.interval = interval;
     this.repeatCount = repeatCount;
+    this.threadScheduler = threadScheduler;
   }
 
+  /**
+   * Start to count
+   * @param countAction called every <i>interval</i> milliseconds
+   * @param countableCompletedAction called on every time completed count the {@link Countable}.
+   * @param stepCountAction called on every time completed count the {@link List} of {@link Countable}
+   */
   public void start(final Action1<Integer> countAction, final Action0 countableCompletedAction,
       final Action1<Integer> stepCountAction) {
     stepCount = 0;
@@ -44,7 +52,7 @@ public class CounterManager {
     counterSubscription =
         repeatCountableStream.concatMap(new Func1<Countable, Observable<Integer>>() {
           @Override public Observable<Integer> call(Countable countable) {
-            return new Counter(interval, Counter.TYPE_COUNT_UP).counterStream(countable)
+            return new Counter(threadScheduler, interval, Counter.TYPE_COUNT_UP).counterStream(countable)
                 .doOnCompleted(countableCompletedAction);
           }
         }).subscribe(new Action1<Integer>() {
@@ -87,7 +95,7 @@ public class CounterManager {
     }
 
     public CounterManager build() {
-      return new CounterManager(countableList, interval, repeatCount);
+      return new CounterManager(countableList, interval, repeatCount, new ComputationThreadScheduler());
     }
   }
 }

@@ -20,11 +20,10 @@ public class CounterManagerTest {
     final List<Countable> countableList =
         Arrays.asList(newCountable(2), newCountable(3), newCountable(4));
     final CounterManager counterManager =
-        new CounterManagerBuilder().countableList(countableList).interval(1).createCounterManager();
+        new CounterManager.Builder().countableList(countableList).repeat(2).interval(1).build();
     final Action1<Integer> count = Mockito.mock(Action1.class);
     final Action0 countableCompletedCount = Mockito.mock(Action0.class);
     final Action1<Integer> stepCount = Mockito.mock(Action1.class);
-    counterManager.setRepeat(2);
     counterManager.start(count, countableCompletedCount, stepCount);
     Mockito.verify(count, times(6)).call(1);
     Mockito.verify(count, times(6)).call(2);

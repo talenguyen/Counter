@@ -15,8 +15,10 @@ public class Counter {
   public static final int TYPE_COUNT_DOWN = 2;
   private final int interval;
   private final int type;
+  private final ThreadScheduler threadScheduler;
 
-  public Counter(int interval, int type) {
+  public Counter(ThreadScheduler threadScheduler, int interval, int type) {
+    this.threadScheduler = threadScheduler;
     this.interval = interval;
     this.type = type;
   }
@@ -24,7 +26,8 @@ public class Counter {
   public Observable<Integer> counterStream(final Countable countable) {
 
     final int maxValue = countable.value();
-    return Observable.interval(interval, TimeUnit.MILLISECONDS, Schedulers.immediate())
+    return Observable.interval(interval, TimeUnit.MILLISECONDS, threadScheduler.subscribeOn())
+        .observeOn(threadScheduler.observeOn())
         .map(new Func1<Long, Integer>() {
           @Override public Integer call(Long value) {
             if (type == TYPE_COUNT_DOWN) {
