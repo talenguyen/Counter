@@ -5,8 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 import org.mockito.Mockito;
+import rx.Scheduler;
 import rx.functions.Action0;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -16,11 +18,24 @@ import static org.mockito.Mockito.times;
  */
 public class CounterManagerTest {
 
+  private ThreadScheduler threadScheduler = new ThreadScheduler() {
+    @Override public Scheduler subscribeOn() {
+      return Schedulers.immediate();
+    }
+
+    @Override public Scheduler observeOn() {
+      return Schedulers.immediate();
+    }
+  };
+
   @Test public void testStart() throws Exception {
     final List<Countable> countableList =
         Arrays.asList(newCountable(2), newCountable(3), newCountable(4));
-    final CounterManager counterManager =
-        new CounterManager.Builder().countableList(countableList).repeat(2).interval(1).build();
+    final CounterManager counterManager = new CounterManager.Builder().countableList(countableList)
+        .repeat(2)
+        .interval(1)
+        .threadScheduler(threadScheduler)
+        .build();
     final Action1<Integer> count = Mockito.mock(Action1.class);
     final Action0 countableCompletedCount = Mockito.mock(Action0.class);
     final Action1<Integer> stepCount = Mockito.mock(Action1.class);

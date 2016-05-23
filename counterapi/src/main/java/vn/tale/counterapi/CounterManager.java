@@ -20,7 +20,7 @@ public class CounterManager {
   private Subscription counterSubscription;
   private ThreadScheduler threadScheduler;
 
-  public CounterManager(@NonNull List<? extends Countable> countableList, int interval, int repeatCount, ThreadScheduler threadScheduler) {
+  private CounterManager(@NonNull List<? extends Countable> countableList, int interval, int repeatCount, ThreadScheduler threadScheduler) {
     this.countableList = countableList;
     this.interval = interval;
     this.repeatCount = repeatCount;
@@ -70,8 +70,9 @@ public class CounterManager {
 
   public static class Builder {
     private List<? extends Countable> countableList;
-    private int interval;
-    private int repeatCount;
+    private int interval = 1000;
+    private int repeatCount = 1;
+    private ThreadScheduler threadScheduler = new ComputationThreadScheduler();
 
     public Builder countableList(List<? extends Countable> countableList) {
       this.countableList = countableList;
@@ -94,8 +95,20 @@ public class CounterManager {
       return this;
     }
 
+    /**
+     * Set thread scheduler where timer will be run on.
+     * @param threadScheduler the {@link ThreadScheduler} object.
+     */
+    public Builder threadScheduler(ThreadScheduler threadScheduler) {
+      this.threadScheduler = threadScheduler;
+      return this;
+    }
+
     public CounterManager build() {
-      return new CounterManager(countableList, interval, repeatCount, new ComputationThreadScheduler());
+      if (countableList == null) {
+        throw new NullPointerException("countableList must not be null or empty");
+      }
+      return new CounterManager(countableList, interval, repeatCount, threadScheduler);
     }
   }
 }
