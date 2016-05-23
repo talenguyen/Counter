@@ -15,6 +15,7 @@ import java.util.List;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import vn.tale.counter.R;
+import vn.tale.counter.util.SimpleCountable;
 import vn.tale.counterapi.Countable;
 import vn.tale.counterapi.CounterManager;
 
@@ -29,18 +30,6 @@ public class CounterActivity extends AppCompatActivity {
   private ToneGenerator endToneGenerator;
   private CounterManager counterManager;
 
-  static class CountableImpl implements Countable {
-    private final int value;
-
-    CountableImpl(int value) {
-      this.value = value;
-    }
-
-    @Override public int value() {
-      return value;
-    }
-  }
-
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_counter);
@@ -49,11 +38,10 @@ public class CounterActivity extends AppCompatActivity {
     counterToneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100);
     endToneGenerator = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
 
-    final List<CountableImpl> countableList =
-        Arrays.asList(new CountableImpl(4), new CountableImpl(7), new CountableImpl(8));
+    final List<SimpleCountable> countableList =
+        Arrays.asList(new SimpleCountable(4), new SimpleCountable(7), new SimpleCountable(8));
     counterManager =
         new CounterManager.Builder().countableList(countableList).interval(1000).repeat(5).build();
-
   }
 
   public void start(View view) {
@@ -83,11 +71,11 @@ public class CounterActivity extends AppCompatActivity {
   }
 
   private void tripleBeep() {
-    counterToneGenerator.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 1000);
+    endToneGenerator.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 1000);
   }
 
   private void doubleBeep() {
-    counterToneGenerator.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 500);
+    endToneGenerator.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 500);
   }
 
   private void beep() {

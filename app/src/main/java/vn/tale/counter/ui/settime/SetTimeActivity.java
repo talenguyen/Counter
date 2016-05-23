@@ -1,61 +1,37 @@
-package vn.tale.counter.ui;
+package vn.tale.counter.ui.settime;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import java.util.ArrayList;
+import java.util.List;
 import vn.tale.counter.R;
 import vn.tale.counter.ui.component.radio.RadioGroupController;
 import vn.tale.counter.ui.component.radio.RadioItem;
+import vn.tale.counter.ui.component.radio.TextRadioItem;
+import vn.tale.counter.util.SimpleCountable;
+import vn.tale.counter.util.TimeBuilder;
 import vn.tale.counter.widget.numberkeyboardlayout.NumberKeyboardLayout;
+import vn.tale.counterapi.Countable;
 
-public class MainActivity extends AppCompatActivity {
+public class SetTimeActivity extends AppCompatActivity {
 
-  private static final String TAG = "MainActivity";
+  private static final String TAG = "SetTimeActivity";
 
   private RadioGroupController radioGroupController;
 
-  static class TextRadioItem implements RadioItem {
-
-    private TextView textView;
-    private final int defaultColor;
-    private final int selectedColor;
-
-    public TextRadioItem(TextView textView) {
-      this.textView = textView;
-      final Context context = textView.getContext();
-      defaultColor = ContextCompat.getColor(context, R.color.black);
-      selectedColor = ContextCompat.getColor(context, R.color.colorAccent);
-    }
-
-    public TextView getTextView() {
-      return textView;
-    }
-
-    @Override public void setSelect(boolean select) {
-      final int color;
-      if (select) {
-        color = selectedColor;
-      } else {
-        color = defaultColor;
-      }
-      textView.setTextColor(color);
-    }
-  }
+  private List<Countable> countableList = new ArrayList<>();
 
   @BindView(R.id.tvMinutes) TextView tvMinutes;
   @BindView(R.id.tvSeconds) TextView tvSeconds;
   @BindView(R.id.vNumberKeyboardLayout) NumberKeyboardLayout vNumberKeyboardLayout;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
@@ -65,19 +41,26 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void addTime(String minutes, String seconds) {
-    Log.d(TAG, "addTime() called with: " + "minutes = [" + minutes + "], seconds = [" + seconds + "]");
+    Log.d(TAG,
+        "addTime() called with: " + "minutes = [" + minutes + "], seconds = [" + seconds + "]");
+    final int mins = Integer.parseInt(minutes);
+    final int secs = Integer.parseInt(seconds);
+    final int resultSeconds = new TimeBuilder().addMinutes(mins).addSeconds(secs).getSeconds();
+    final Countable countable = new SimpleCountable(resultSeconds);
+    countableList.add(countable);
   }
 
   private void setupRadioGroupController() {
     radioGroupController = new RadioGroupController();
     radioGroupController.addItem(new TextRadioItem(tvMinutes));
     radioGroupController.addItem(new TextRadioItem(tvSeconds));
-    radioGroupController.setOnItemSelectedListener(new RadioGroupController.OnItemSelectedListener() {
-      @Override public void onItemSelected(RadioItem radioItem) {
-        final TextView textView = ((TextRadioItem) radioItem).getTextView();
-        vNumberKeyboardLayout.setTarget(textView);
-      }
-    });
+    radioGroupController.setOnItemSelectedListener(
+        new RadioGroupController.OnItemSelectedListener() {
+          @Override public void onItemSelected(RadioItem radioItem) {
+            final TextView textView = ((TextRadioItem) radioItem).getTextView();
+            vNumberKeyboardLayout.setTarget(textView);
+          }
+        });
   }
 
   @OnClick(R.id.tvMinutes) public void onTapMinuteView() {
@@ -99,5 +82,4 @@ public class MainActivity extends AppCompatActivity {
       }
     });
   }
-
 }
